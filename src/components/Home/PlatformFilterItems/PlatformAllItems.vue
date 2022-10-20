@@ -1,0 +1,108 @@
+<template>
+  <div class="container">
+    <div class="row">
+      <div
+        v-for="(portfolioItem, imageIndex) in portfolioData"
+        :key="portfolioItem.id"
+        class="col-lg-4 col-md-6"
+      >
+        <div class="tportfolio mb-30">
+          <div class="tportfolio__img">
+            <button class="popup-image">
+              <img
+                :src="
+                  typeof portfolioItem.image === 'string'
+                    ? portfolioItem.image
+                    : portfolioItem.image
+                "
+              />
+            </button>
+          </div>
+          <div class="tportfolio__text">
+            <h3 class="tportfolio-title">
+              <router-link :to="'/platform-details/' + portfolioItem.id">{{
+                portfolioItem.title
+              }}</router-link>
+            </h3>
+            <h4>{{ portfolioItem.subtitle }}</h4>
+            <div class="portfolio-plus">
+              <button v-on:click="showImg(imageIndex)">
+                <i class="fal fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <vue-easy-lightbox
+      :visible="visible"
+      :imgs="portfolioData.map((img) => img.image)"
+      :index="index"
+      @hide="handleHide"
+    ></vue-easy-lightbox>
+  </div>
+</template>
+
+<script>
+import VueEasyLightbox from "vue-easy-lightbox";
+
+export default {
+  name: "GalleryOne",
+  components: {
+    VueEasyLightbox,
+  },
+  data() {
+    return {
+      visible: false,
+      index: 0,
+      portfolioData: [
+        {
+          id: "1",
+          image: require(`@/assets/img/platform/XClinScreenShot.png`),
+          title: "Simple User Friendly User Interface",
+          subtitle: "Usability",
+        },
+        {
+          id: "2",
+          image: require(`@/assets/img/platform/audit.png`),
+          title: "Audited Compliance",
+          subtitle: "Quality",
+        },
+        {
+          id: "3",
+          image: require(`@/assets/img/platform/AfricaOffline.jpeg`),
+          title: "Works in location without Internet Connection",
+          subtitle: "Usability",
+        },
+        {
+          id: "4",
+          image: require(`@/assets/img/platform/Sensor.png`),
+          title: "Unlimited eForm Capacity",
+          subtitle: "Usability",
+        },
+        {
+          id: "5",
+          image: require(`@/assets/img/platform/Monitoring.png`),
+          title: "Field Level Access Rights",
+          subtitle: "Usability",
+        },
+        {
+          id: "6",
+          image: require(`@/assets/img/platform/AccessGranted.png`),
+          title: "Close Integration with PICAPS",
+          subtitle: "Compliance",
+        },
+      ],
+    };
+  },
+  methods: {
+    showImg(index) {
+      this.index = index;
+      this.visible = true;
+    },
+    handleHide() {
+      this.visible = false;
+    },
+  },
+};
+</script>
